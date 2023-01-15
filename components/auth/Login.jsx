@@ -1,81 +1,21 @@
-import { useEffect, useState } from 'react';
-import { login, sessionModal, user } from '@/stores/users';
-import { useStore } from '@nanostores/react';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '@/components/Spinner/Spinner';
 import Message from '@/components/Message/Message';
+import useLogin from './useLogin';
 
 const Login = ({ toggleTab }) => {
-  const [action, setAction] = useState('LOGIN');
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState(null);
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState(null);
-  const [userSession, setUserSession] = useState({
-    user: null,
-    status: 'SUCCESS',
-    error: '',
-  });
-
-  const $user = useStore(user);
-
-  useEffect(() => {
-    setUserSession($user);
-    if (userSession.user) {
-      sessionModal.set(false);
-    }
-  }, [$user, userSession.user]);
-
-  const handleSubmit = () => {
-    let error = false;
-    if (email.length === 0) {
-      setEmailError('Obligatorio');
-      error = true;
-    }
-    if (password.length === 0) {
-      setPasswordError('Obligatorio');
-      error = true;
-    }
-
-    if (error || emailError !== null || passwordError !== null) return;
-
-    login(email, password);
-  };
-
-  const handleForgot = () => {
-    if (email.length === 0) {
-      setEmailError('Obligatorio');
-      return;
-    }
-
-    // Action
-  };
-
-  function handleChange(name, value) {
-    console.log('Change', name, value);
-    if (name === 'email') {
-      const pattern =
-        '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
-      setEmail(value);
-      let regex = new RegExp(pattern);
-      regex.exec(value) === null
-        ? setEmailError('Ingresa un email válido')
-        : setEmailError(null);
-    }
-    if (name === 'password') {
-      setPassword(value);
-      if (value.length < 8) {
-        setPasswordError('Mínimo 8 caracteres');
-        return;
-      }
-      setPasswordError(null);
-    }
-  }
-
-  const closeMessage = () => {
-    console.log('closeMessage');
-    user.set({ ...user.get(), status: 'SUCCESS', error: '' });
-  };
-
+  const {
+    userSession,
+    action,
+    setAction,
+    email,
+    password,
+    emailError,
+    passwordError,
+    closeMessage,
+    handleChange,
+    handleForgot,
+    handleSubmit,
+  } = useLogin();
   return (
     <>
       <div className="relative">
@@ -195,7 +135,7 @@ const Login = ({ toggleTab }) => {
                     required
                   />
                   <p
-                    className={`absolute block text-sm tracking-wider	text-red-500 opacity-0 transition-opacity duration-1000 ease-out ${
+                    className={`absolute block text-sm tracking-wider	text-red-500 transition-opacity duration-1000 ease-out ${
                       passwordError ? 'opacity-100' : 'opacity-0'
                     }`}
                   >
@@ -220,23 +160,6 @@ const Login = ({ toggleTab }) => {
                       Crear cuenta
                     </button>
                   </div>
-
-                  {/* <div className="flex items-start">
-                    <div className="flex items-center h-5">
-                      <input
-                        type="checkbox"
-                        id="remember"
-                        value=""
-                        className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300"
-                      />
-                    </div>
-                    <label
-                      htmlFor="remember"
-                      className="ml-2 text-sm font-medium text-gray-800"
-                    >
-                      Recuérdame
-                    </label>
-                  </div> */}
                 </div>
               </div>
 
