@@ -170,7 +170,7 @@ const Login = ({ toggleTab }) => {
                   />
                   <p
                     className={`absolute block tracking-wider text-sm text-red-500 opacity-0 transition-opacity duration-1000 ease-out ${
-                      emailError ? 'opacity-100' : 'opacity-0'
+                      emailError.length > 0 ? 'opacity-100' : 'opacity-0'
                     }`}
                   >
                     {emailError}
