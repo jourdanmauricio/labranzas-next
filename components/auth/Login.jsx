@@ -149,6 +149,7 @@ const Login = ({ toggleTab }) => {
               <Message msg={userSession.error} closeMessage={closeMessage} />
               <div className="grow flex flex-col justify-evenly">
                 <div>
+                  {emailError}
                   <label
                     htmlFor="email"
                     className="block text-sm tracking-wider font-medium text-gray-600"
@@ -163,7 +164,7 @@ const Login = ({ toggleTab }) => {
                     onChange={(e) =>
                       handleChange(e.target.name, e.target.value)
                     }
-                    className="bg-gray-50 border border-gray-300 text-gray-800  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2"
+                    className="bg-gray-50 border border-gray-300 text-gray-800  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="email@example.com"
                     required
                   />
@@ -190,7 +191,7 @@ const Login = ({ toggleTab }) => {
                     onChange={(e) =>
                       handleChange(e.target.name, e.target.value)
                     }
-                    className="bg-gray-50 border border-gray-300 text-gray-800  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2"
+                    className="bg-gray-50 border border-gray-300 text-gray-800  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="********"
                     required
                   />
