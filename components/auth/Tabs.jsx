@@ -34,14 +34,14 @@ const Tabs = () => {
       </div>
       <div className="grow bg-white">
         <div
-          className={`bg-white px-0 py-5 w-full h-full ${
+          className={`bg-white px-0 w-full h-full ${
             toggleState === 1 ? 'block' : 'hidden'
           }`}
         >
           <Login toggleTab={toggleTab} />
         </div>
         <div
-          className={`bg-white px-0 py-5 w-full h-full ${
+          className={`bg-white px-0 w-full h-full ${
             toggleState === 2 ? 'block' : 'hidden'
           }`}
         >

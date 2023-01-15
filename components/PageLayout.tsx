@@ -20,6 +20,7 @@ const PageLayout: FC<MyProps> = ({ children, title = 'Labranzas' }) => {
         <title>{title}</title>
       </Head>
       <main>{children}</main>
+
       <Footer />
     </>
   );

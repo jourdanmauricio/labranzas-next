@@ -1,15 +1,7 @@
-// import { atom } from 'nanostores';
+import { atom } from 'nanostores';
 import { persistentAtom } from '@nanostores/persistent';
 
-// export const isFavoritesOpen = atom(false);
-export const isFavoritesOpen = persistentAtom<boolean>(
-  'isFavoritesOpen:',
-  false,
-  {
-    encode: JSON.stringify,
-    decode: JSON.parse,
-  }
-);
+export const isFavoritesOpen = atom(false);
 
 export type FavoriteItem = {
   id: number;
@@ -18,8 +10,6 @@ export type FavoriteItem = {
   price: number;
   thumbnail: string;
 };
-
-// export const favoritesItems = atom<FavoriteItem[]>([]);
 
 export const favoritesItems = persistentAtom<FavoriteItem[]>(
   'favoritesItems:',

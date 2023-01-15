@@ -1,21 +1,21 @@
-import React from 'react';
+import { sessionModal } from '@/stores/users';
 
-const Modal = ({ isVisible, onClose, children }) => {
+const Modal = ({ isVisible, closeModal, children }) => {
   if (!isVisible) return null;
 
   const handleClose = (e) => {
-    if (e.target.id === 'wrapper') onClose();
+    if (e.target.id === 'wrapper') closeModal();
   };
 
   return (
     <div
       onClick={handleClose}
       id="wrapper"
-      className="fixed z-50 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center"
+      className="fixed z-40 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center"
     >
       <div className="md:w-[600px] w-[90%] mx-auto flex flex-col">
         <button
-          onClick={() => onClose()}
+          onClick={() => closeModal()}
           className="text-white text-xl place-self-end"
         >
           X

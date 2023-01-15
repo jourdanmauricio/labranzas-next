@@ -44,16 +44,10 @@ const ProductCard: FC<MyProps> = ({ product }) => {
         <Image
           width={192}
           height={192}
-          className="w-48 h-48 object-cover hover:scale-110 transition-all duration-500 ease-in-out transform"
+          className="object-cover hover:scale-110 transition-all duration-500 ease-in-out transform"
           src={product.thumbnail.replace('I', 'C')}
           alt=""
         />
-
-        {/* <img
-          className="w-48 h-48 object-cover hover:scale-110 transition-all duration-500 ease-in-out transform"
-          src={product.thumbnail.replace('I', 'C')}
-          alt=""
-        /> */}
       </div>
 
       <div className="absolute top-1 right-6 mt-5 flex flex-col gap-3">

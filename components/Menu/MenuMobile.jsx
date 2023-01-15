@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
-// import FavoritesButton from './FavoritesButton';
-// import FavoritesFlyout from '../FavoritesFlyout';
-import LoginButton from './LoginButton';
+import FavoritesButton from './FavoritesButton';
+import FavoritesFlyout from '../FavoritesFlyout';
+import SessionButton from './SessionButton';
 
 const MenuMobile = () => {
   return (
@@ -14,8 +14,8 @@ const MenuMobile = () => {
       <span className="text-gray-100 text-xl sm:text-3xl">Lab</span>
 
       <div>
-        <LoginButton />
-        {/* <FavoritesButton /> */}
+        <SessionButton />
+        <FavoritesButton />
         <button className="p-2 rounded-full transition duration-300 ease-in-out hover:hover:bg-gray-600">
           <Icon className="w-6 inline text-gray-100" icon="mdi:cart-outline" />
         </button>
@@ -45,7 +45,7 @@ const MenuMobile = () => {
           </li>
         </ul>
       </nav>
-      {/* <FavoritesFlyout /> */}
+      <FavoritesFlyout />
     </header>
   );
 };

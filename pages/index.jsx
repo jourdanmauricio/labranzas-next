@@ -1,74 +1,24 @@
 import { Inter } from '@next/font/google';
 import PageLayout from '@/components/PageLayout';
-import { FC } from 'react';
-import { useEffect, useState } from 'react';
 import Divider from '@/components/Divider';
 import ProductCard from '@/components/ProductCard';
 import Menu from '@/components/Menu/Menu';
 import MenuMobile from '@/components/Menu/MenuMobile';
 import Hero from '@/components/Hero';
+import Modal from '@/components/Modal/Modal';
+import Tabs from '@/components/auth/Tabs';
+import { useStore } from '@nanostores/react';
+import { sessionModal, user } from '@/stores/users';
 
 const inter = Inter({ subsets: ['latin'] });
 
-interface productsFeatures {
-  id: number;
-  prod_id: number;
-  new_product: string;
-  featured: string;
-  best_sellers: string;
-  trend: string;
-  price: number;
-  available_quantity: number;
-  title: string;
-  thumbnail: string;
-  seller_custom_field: string;
-}
+const Home = ({ newProducts, bestSellers, featured, trend }) => {
+  const $sessionModal = useStore(sessionModal);
 
-interface MyProps {
-  newProducts: productsFeatures[];
-  bestSellers: productsFeatures[];
-  featured: productsFeatures[];
-  trend: productsFeatures[];
-}
-
-const Home: FC<MyProps> = ({ newProducts, bestSellers, featured, trend }) => {
-  // export default function Home({ newProds, bestSellers, featured, trend }) {
-  // const [newProducts, setNewProducts] = useState([]);
-  // const [bestSellers, setBestSellers] = useState([]);
-  // const [featured, setFeatured] = useState([]);
-  // const [trend, setTrend] = useState([]);
-
-  // const fetchdata = async () => {
-  //   const data = await fetch(
-  //     `${process.env.NEXT_PUBLIC_BACKEND_API}/productsweb`
-  //   );
-  //   const products = await data.json();
-  //   console.log(products);
-
-  //   const newProds = products.filter(
-  //     (prod: productsFeatures) => prod.new_product === '1'
-  //   );
-  //   setNewProducts(newProds);
-
-  //   const bestSellers = products.filter(
-  //     (prod: productsFeatures) => prod.best_sellers === '1'
-  //   );
-  //   setBestSellers(bestSellers);
-
-  //   const featured = products.filter(
-  //     (prod: productsFeatures) => prod.featured === '1'
-  //   );
-  //   setFeatured(featured);
-
-  //   const trend = products.filter(
-  //     (prod: productsFeatures) => prod.trend === '1'
-  //   );
-  //   setTrend(trend);
-  // };
-
-  // useEffect(() => {
-  //   fetchdata();
-  // }, []);
+  const closeModal = () => {
+    sessionModal.set(false);
+    user.set({ ...user.get(), status: 'SUCCESS', error: '' });
+  };
   return (
     <>
       <PageLayout title="Labranzas | Home">
@@ -89,7 +39,7 @@ const Home: FC<MyProps> = ({ newProducts, bestSellers, featured, trend }) => {
             <Divider text="Últimas publicaciones" />
 
             <div className="text-center p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-16 place-items-center">
-              {newProducts.map((product: productsFeatures) => (
+              {newProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
@@ -123,7 +73,7 @@ const Home: FC<MyProps> = ({ newProducts, bestSellers, featured, trend }) => {
             <Divider text="Más vendidos" />
 
             <div className="text-center p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-16 place-items-center">
-              {bestSellers.map((product: productsFeatures) => (
+              {bestSellers.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
@@ -155,7 +105,7 @@ const Home: FC<MyProps> = ({ newProducts, bestSellers, featured, trend }) => {
           <section className="py-16">
             <Divider text="Destacados" />
             <div className="text-center p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-16 place-items-center">
-              {featured.map((product: productsFeatures) => (
+              {featured.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
@@ -166,13 +116,16 @@ const Home: FC<MyProps> = ({ newProducts, bestSellers, featured, trend }) => {
           <section className="py-16">
             <Divider text="Tendencia" />
             <div className="text-center p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-16 place-items-center">
-              {trend.map((product: productsFeatures) => (
+              {trend.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
           </section>
         )}
       </PageLayout>
+      <Modal isVisible={$sessionModal} closeModal={closeModal}>
+        <Tabs />
+      </Modal>
     </>
   );
 };
@@ -185,19 +138,13 @@ export async function getStaticProps() {
   );
   const products = await data.json();
 
-  const newProducts = products.filter(
-    (prod: productsFeatures) => prod.new_product === '1'
-  );
+  const newProducts = products.filter((prod) => prod.new_product === '1');
 
-  const bestSellers = products.filter(
-    (prod: productsFeatures) => prod.best_sellers === '1'
-  );
+  const bestSellers = products.filter((prod) => prod.best_sellers === '1');
 
-  const featured = products.filter(
-    (prod: productsFeatures) => prod.featured === '1'
-  );
+  const featured = products.filter((prod) => prod.featured === '1');
 
-  const trend = products.filter((prod: productsFeatures) => prod.trend === '1');
+  const trend = products.filter((prod) => prod.trend === '1');
 
   return {
     props: {
