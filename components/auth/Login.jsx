@@ -97,9 +97,9 @@ const Login = ({ toggleTab }) => {
                     type="email"
                     name="email"
                     id="email"
-                    onChange={(e) =>
-                      handleChange(e.target.name, e.target.value)
-                    }
+                    // onChange={(e) =>
+                    //   handleChange(e.target.name, e.target.value)
+                    // }
                     className="bg-gray-50 border border-gray-300 text-gray-800  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="email@example.com"
                     required
