@@ -149,7 +149,6 @@ const Login = ({ toggleTab }) => {
               <Message msg={userSession.error} closeMessage={closeMessage} />
               <div className="grow flex flex-col justify-evenly">
                 <div>
-                  {emailError}
                   <label
                     htmlFor="email"
                     className="block text-sm tracking-wider font-medium text-gray-600"
@@ -169,7 +168,7 @@ const Login = ({ toggleTab }) => {
                     required
                   />
                   <p
-                    className={`absolute block tracking-wider text-sm text-red-500 opacity-0 transition-opacity duration-1000 ease-out ${
+                    className={`absolute block tracking-wider text-sm text-red-500 transition-opacity duration-1000 ease-out ${
                       emailError !== null ? 'opacity-100' : 'opacity-0'
                     }`}
                   >
