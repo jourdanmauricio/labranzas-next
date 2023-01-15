@@ -51,6 +51,7 @@ const Login = ({ toggleTab }) => {
   };
 
   function handleChange(name, value) {
+    console.log('Change', name, value);
     if (name === 'email') {
       const pattern =
         '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
