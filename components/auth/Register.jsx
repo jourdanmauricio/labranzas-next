@@ -25,7 +25,7 @@ const Register = ({ toggleTab }) => {
         {userSession.status === 'LOADING' && <Spinner />}
         <div className="p-4">
           <form className="min-h-[400px] flex flex-col">
-            <Message msg={userSession.error} closeMessage={closeMessage} />
+            <Message msg={userSession.message} closeMessage={closeMessage} />
             <div className="grow flex flex-col justify-evenly">
               <div>
                 <label

@@ -1,5 +1,3 @@
-import { sessionModal } from '@/stores/users';
-
 const Modal = ({ isVisible, closeModal, children }) => {
   if (!isVisible) return null;
 

@@ -11,12 +11,12 @@ export type User = {
 export type UserState = {
   user: User | null;
   status: string;
-  error: string;
+  message: string;
 };
 const initialState = {
   user: null,
   status: 'SUCCESS',
-  error: '',
+  message: '',
 };
 
 export const user = persistentAtom<UserState>('User:', initialState, {
@@ -31,7 +31,7 @@ export const register = async (email: string, password: string) => {
     user.set({
       user: null,
       status: 'LOADING',
-      error: '',
+      message: '',
     });
 
     const options = {
@@ -59,13 +59,13 @@ export const register = async (email: string, password: string) => {
         token,
       },
       status: 'SUCCCESS',
-      error: '',
+      message: '',
     });
   } catch (err) {
     user.set({
       user: null,
-      status: 'ERROR',
-      error: err as string,
+      status: 'FAILED',
+      message: err as string,
     });
   }
 };
@@ -75,7 +75,7 @@ export const login = async (email: string, password: string) => {
     user.set({
       user: null,
       status: 'LOADING',
-      error: '',
+      message: '',
     });
 
     const options = {
@@ -92,7 +92,6 @@ export const login = async (email: string, password: string) => {
     );
     const { access_token } = await data.json();
 
-    console.log('data.status', data.status);
     if (data.status !== 200)
       throw 'Credenciales incorrectas. Verifique usuario y contraseña';
 
@@ -118,13 +117,88 @@ export const login = async (email: string, password: string) => {
         token: access_token,
       },
       status: 'SUCCCESS',
-      error: '',
+      message: '',
     });
   } catch (err) {
     user.set({
       user: null,
-      status: 'ERROR',
-      error: err as string,
+      status: 'FAILED',
+      message: err as string,
+    });
+  }
+};
+
+export const forgotPassword = async (email: string) => {
+  user.set({
+    user: null,
+    status: 'LOADING',
+    message: '',
+  });
+  try {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const data = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/recovery`,
+      options
+    );
+    const resRecovery = await data.json();
+
+    if (data.status !== 200) throw 'Verifica el email ingresado';
+
+    user.set({
+      user: null,
+      status: 'SUCCCESS',
+      message:
+        'Email enviado!. Sigue las instrucciones para generar la contraseña.',
+    });
+  } catch (err) {
+    user.set({
+      user: null,
+      status: 'FAILED',
+      message: err as string,
+    });
+  }
+};
+
+export const recoveryPassword = async (newPassword: string, token: string) => {
+  user.set({
+    user: null,
+    status: 'LOADING',
+    message: '',
+  });
+  try {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify({ newPassword, token }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const data = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/change-password`,
+      options
+    );
+    const changePass = await data.json();
+
+    if (data.status !== 200) throw 'Error generando el password';
+
+    user.set({
+      user: null,
+      status: 'SUCCESS',
+      message: 'Password generado correctamente',
+    });
+
+    return 'PASSWORD-CHANGED';
+  } catch (err) {
+    user.set({
+      user: null,
+      status: 'FAILED',
+      message: err as string,
     });
   }
 };

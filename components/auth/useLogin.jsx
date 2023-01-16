@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
-import { login, sessionModal, user } from '@/stores/users';
+import { forgotPassword, login, sessionModal, user } from '@/stores/users';
 import { useStore } from '@nanostores/react';
 
 const useLogin = () => {
   const [action, setAction] = useState('LOGIN');
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(null);
+  const [emailForgot, setEmailForgot] = useState('');
+  const [emailForgotError, setEmailForgotError] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState(null);
   const [userSession, setUserSession] = useState({
     user: null,
     status: 'SUCCESS',
-    error: '',
+    message: '',
   });
 
   const $user = useStore(user);
@@ -39,17 +41,16 @@ const useLogin = () => {
     login(email, password);
   };
 
-  const handleForgot = () => {
-    if (email.length === 0) {
-      setEmailError('Obligatorio');
+  const handleForgot = async () => {
+    if (emailForgot.length === 0) {
+      setEmailForgotError('Obligatorio');
       return;
     }
 
-    // Action
+    await forgotPassword(emailForgot);
   };
 
   function handleChange(name, value) {
-    console.log('Change', name, value);
     if (name === 'email') {
       const pattern =
         '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
@@ -59,6 +60,16 @@ const useLogin = () => {
         ? setEmailError('Ingresa un email válido')
         : setEmailError(null);
     }
+    if (name === 'emailForgot') {
+      const pattern =
+        '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$';
+      setEmailForgot(value);
+      let regex = new RegExp(pattern);
+      regex.exec(value) === null
+        ? setEmailForgotError('Ingresa un email válido')
+        : setEmailForgotError(null);
+    }
+
     if (name === 'password') {
       setPassword(value);
       if (value.length < 8) {
@@ -71,7 +82,7 @@ const useLogin = () => {
 
   const closeMessage = () => {
     console.log('closeMessage');
-    user.set({ ...user.get(), status: 'SUCCESS', error: '' });
+    user.set({ ...user.get(), status: 'SUCCESS', message: '' });
   };
 
   return {
@@ -80,8 +91,10 @@ const useLogin = () => {
     setAction,
     email,
     password,
+    emailForgot,
     emailError,
     passwordError,
+    emailForgotError,
     closeMessage,
     handleChange,
     handleForgot,

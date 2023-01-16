@@ -8,7 +8,7 @@ import Link from 'next/link';
 const initialState = {
   user: null,
   status: 'SUCCESS',
-  error: '',
+  message: '',
 };
 
 const Menu = () => {

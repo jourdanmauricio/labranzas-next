@@ -8,9 +8,11 @@ const Login = ({ toggleTab }) => {
     action,
     setAction,
     email,
+    emailForgot,
     password,
     emailError,
     passwordError,
+    emailForgotError,
     closeMessage,
     handleChange,
     handleForgot,
@@ -23,33 +25,34 @@ const Login = ({ toggleTab }) => {
         <div className="p-4">
           {action === 'FORGOT' && (
             <form className="min-h-[400px] flex flex-col">
-              <Message msg={userSession.error} closeMessage={closeMessage} />
+              <Message msg={userSession.message} closeMessage={closeMessage} />
               <div className="grow flex flex-col justify-evenly">
                 <h3 className="text-center">Recuperar contraseña</h3>
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="emailForgot"
                     className="block mb-2 text-sm font-medium text-gray-800"
                   >
                     Email
                   </label>
                   <input
                     type="email"
-                    name="email"
-                    id="email"
-                    // onChange={(e) =>
-                    //   handleChange(e.target.name, e.target.value)
-                    // }
+                    name="emailForgot"
+                    id="emailForgot"
+                    value={emailForgot}
+                    onChange={(e) =>
+                      handleChange(e.target.name, e.target.value)
+                    }
                     className="bg-gray-50 border border-gray-300 text-gray-800  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="email@example.com"
                     required
                   />
                   <p
                     className={`absolute block tracking-wider text-sm text-red-500 opacity-0 transition-opacity duration-1000 ease-out ${
-                      emailError ? 'opacity-100' : 'opacity-0'
+                      emailForgotError ? 'opacity-100' : 'opacity-0'
                     }`}
                   >
-                    {emailError}
+                    {emailForgotError}
                   </p>
                 </div>
 
@@ -76,7 +79,7 @@ const Login = ({ toggleTab }) => {
               </div>
 
               <button
-                type="submit"
+                type="button"
                 onClick={handleForgot}
                 className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center"
               >
@@ -86,7 +89,7 @@ const Login = ({ toggleTab }) => {
           )}
           {action === 'LOGIN' && (
             <form className="min-h-[400px] flex flex-col">
-              <Message msg={userSession.error} closeMessage={closeMessage} />
+              <Message msg={userSession.message} closeMessage={closeMessage} />
               <div className="grow flex flex-col justify-evenly">
                 <div>
                   <label

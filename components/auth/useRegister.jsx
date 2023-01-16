@@ -14,7 +14,7 @@ const useRegister = () => {
   const [userSession, setUserSession] = useState({
     user: null,
     status: 'SUCCESS',
-    error: '',
+    message: '',
   });
 
   const $user = useStore(user);
@@ -42,7 +42,7 @@ const useRegister = () => {
       user.set({
         ...user.get(),
         status: 'ERROR',
-        error: 'Debes aceptar términos y condiciones',
+        message: 'Debes aceptar términos y condiciones',
       });
     }
 
@@ -88,8 +88,9 @@ const useRegister = () => {
     setTerms(!terms);
     setTermsError(false);
   };
+
   const closeMessage = () => {
-    user.set({ ...user.get(), status: 'SUCCESS', error: '' });
+    user.set({ ...user.get(), status: 'SUCCESS', message: '' });
   };
 
   return {

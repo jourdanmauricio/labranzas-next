@@ -17,8 +17,9 @@ const Home = ({ newProducts, bestSellers, featured, trend }) => {
 
   const closeModal = () => {
     sessionModal.set(false);
-    user.set({ ...user.get(), status: 'SUCCESS', error: '' });
+    user.set({ ...user.get(), status: 'SUCCESS', message: '' });
   };
+
   return (
     <>
       <PageLayout title="Labranzas | Home">
