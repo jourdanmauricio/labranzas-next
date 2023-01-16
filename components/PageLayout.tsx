@@ -19,7 +19,8 @@ const PageLayout: FC<MyProps> = ({ children, title = 'Labranzas' }) => {
         <link rel="icon" href="/favicon.ico" />
         <title>{title}</title>
       </Head>
-      <main>{children}</main>
+
+      <main className="min-h-screen">{children}</main>
 
       <Footer />
     </>

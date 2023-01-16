@@ -1,9 +1,13 @@
+import { useStore } from '@nanostores/react';
+import { sessionModal, user } from '@/stores/users';
 import { useRouter } from 'next/router';
 import { Icon } from '@iconify/react';
-import FavoritesFlyout from '../FavoritesFlyout';
+import FavoritesFlyout from '../Favorites/FavoritesFlyout';
 import FavoritesButton from './FavoritesButton';
 import SessionButton from './SessionButton';
 import Link from 'next/link';
+import Modal from '../Modal/Modal';
+import Tabs from '../auth/Tabs';
 
 const initialState = {
   user: null,
@@ -12,8 +16,15 @@ const initialState = {
 };
 
 const Menu = () => {
+  const $sessionModal = useStore(sessionModal);
+
   const router = useRouter();
   const currentPath = router.pathname;
+
+  const closeModal = () => {
+    sessionModal.set(false);
+    user.set({ ...user.get(), status: 'SUCCESS', message: '' });
+  };
 
   return (
     <>
@@ -26,7 +37,7 @@ const Menu = () => {
               className={`p-4 transition duration-300 ease-in-out hover:bg-gray-600 currentPath === ''
           ? bg-gray-900 : ''`}
             >
-              <Link href="#" className="text-gray-100">
+              <Link href="/" className="text-gray-100">
                 Inicio
               </Link>
             </li>
@@ -91,6 +102,10 @@ const Menu = () => {
         </div>
         <FavoritesFlyout />
       </header>
+
+      <Modal isVisible={$sessionModal} closeModal={closeModal}>
+        <Tabs />
+      </Modal>
     </>
   );
 };

@@ -3,9 +3,10 @@ import {
   isFavoritesOpen,
   favoritesItems,
   removeFavoriteItem,
-} from '../stores/favorites';
+} from '@/stores/favorites';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function FavoritesFlyout() {
   const $isFavoritesOpen = useStore(isFavoritesOpen);
@@ -27,18 +28,33 @@ export default function FavoritesFlyout() {
         $isFavoritesOpen ? 'scale-100' : 'scale-0'
       }`}
     >
-      <h2 className="text-center text-xl text-gray-800">Favoritos</h2>
+      <Link
+        onClick={() => isFavoritesOpen.set(false)}
+        href="/favoritos"
+        className="absolute tracking-wider text-xs top-2 left-2 cursor-pointer p-1 rounded-md text-gray-700  hover:bg-gray-100"
+      >
+        Ver detalle
+      </Link>
+
       <button
         onClick={() => isFavoritesOpen.set(false)}
         className="absolute text-xs top-2 right-2 cursor-pointer p-1 rounded-md text-gray-700  hover:bg-gray-100"
       >
-        Cerrar
+        <span className="tracking-wider">Cerrar</span>
       </button>
-      <hr />
+
+      <h2 className="text-center text-xl text-gray-800">Favoritos</h2>
+      {/* <button
+        onClick={() => isFavoritesOpen.set(false)}
+        className="absolute text-xs top-2 right-2 cursor-pointer p-1 rounded-md text-gray-700  hover:bg-gray-100"
+      >
+        Cerrar
+      </button> */}
+      <hr className="mt-4" />
       {favItems.length > 0 && (
         <ul>
           {favItems.map((item) => (
-            <li key={item.id} className="text-sm flex gap-2 border-b-2">
+            <li key={item.id} className="text-sm flex gap-2 border-b-2 py-2">
               <Image
                 width={56}
                 height={56}

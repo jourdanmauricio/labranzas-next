@@ -28,7 +28,13 @@
     "components/Menu/Menu.jsx",
     "components/Menu/Menu.jsx",
     "components/Menu/MenuMobile.jsx",
-    "components/Menu/MenuMobile.jsx"
+    "components/Menu/MenuMobile.jsx",
+    "components/ProductCard.jsx",
+    "components/ProductCard.jsx",
+    "pages/contacto.jsx",
+    "pages/contacto.jsx",
+    "pages/producto/[id].jsx",
+    "pages/producto/[id].jsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,25 +1,14 @@
 import { Inter } from '@next/font/google';
 import PageLayout from '@/components/PageLayout';
-import Divider from '@/components/Divider';
-import ProductCard from '@/components/ProductCard';
 import Menu from '@/components/Menu/Menu';
 import MenuMobile from '@/components/Menu/MenuMobile';
+import ProductCard from '@/components/ProductCard';
+import Divider from '@/components/Divider';
 import Hero from '@/components/Hero';
-import Modal from '@/components/Modal/Modal';
-import Tabs from '@/components/auth/Tabs';
-import { useStore } from '@nanostores/react';
-import { sessionModal, user } from '@/stores/users';
 
 const inter = Inter({ subsets: ['latin'] });
 
 const Home = ({ newProducts, bestSellers, featured, trend }) => {
-  const $sessionModal = useStore(sessionModal);
-
-  const closeModal = () => {
-    sessionModal.set(false);
-    user.set({ ...user.get(), status: 'SUCCESS', message: '' });
-  };
-
   return (
     <>
       <PageLayout title="Labranzas | Home">
@@ -124,9 +113,6 @@ const Home = ({ newProducts, bestSellers, featured, trend }) => {
           </section>
         )}
       </PageLayout>
-      <Modal isVisible={$sessionModal} closeModal={closeModal}>
-        <Tabs />
-      </Modal>
     </>
   );
 };

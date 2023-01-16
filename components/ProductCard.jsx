@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Icon } from '@iconify/react';
 import { useStore } from '@nanostores/react';
 import {
@@ -9,23 +8,7 @@ import {
 } from '@/stores/favorites';
 import Image from 'next/image';
 
-interface MyProps {
-  product: {
-    id: number;
-    prod_id: number;
-    new_product: string;
-    featured: string;
-    best_sellers: string;
-    trend: string;
-    price: number;
-    available_quantity: number;
-    title: string;
-    thumbnail: string;
-    seller_custom_field: string;
-  };
-}
-
-const ProductCard: FC<MyProps> = ({ product }) => {
+const ProductCard = ({ product }) => {
   const favorites = useStore(favoritesItems);
   const handleClick = () => {
     isFavorite(product.id)

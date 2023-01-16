@@ -152,7 +152,7 @@ export const forgotPassword = async (email: string) => {
 
     user.set({
       user: null,
-      status: 'SUCCCESS',
+      status: 'RECOVERY',
       message:
         'Email enviado!. Sigue las instrucciones para generar la contraseña.',
     });
