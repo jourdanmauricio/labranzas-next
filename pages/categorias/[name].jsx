@@ -2,9 +2,17 @@ import PageLayout from '@/components/PageLayout';
 import ProductCard from '@/components/ProductCard';
 import Menu from '@/components/Menu/Menu';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Category = ({ products, categories, catName }) => {
   console.log('category', catName);
+
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <PageLayout>
       <Menu categories={categories}></Menu>
@@ -97,6 +105,6 @@ export async function getStaticPaths() {
   console.log('PATHSSSSSSSSS', paths);
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 }
