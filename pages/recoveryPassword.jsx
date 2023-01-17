@@ -95,7 +95,7 @@ const RecoveryPassword = () => {
       <PageLayout title="Labranzas | Home">
         <MenuMobile />
         <Hero />
-        <Menu />
+        {/* <Menu /> */}
 
         <Modal isVisible="true" closeModal={closeModal}>
           {/* <div

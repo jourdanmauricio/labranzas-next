@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import FavoriteItem from '@/components/Favorites/FavoriteItem';
 import { Icon } from '@iconify/react';
 
-const Favoritos = () => {
+const Favoritos = ({ categories }) => {
   const $favoritesItems = useStore(favoritesItems);
   const [favItems, setFavItems] = useState([]);
   const [searchText, setSearchText] = useState('');
@@ -39,7 +39,7 @@ const Favoritos = () => {
       <PageLayout title="Labranzas | Home">
         <header>
           <MenuMobile />
-          <Menu />
+          <Menu categories={categories} />
         </header>
         <h1 className="pt-10 text-3xl text-gray-800 text-center">Favoritos</h1>
 
@@ -89,3 +89,16 @@ const Favoritos = () => {
 };
 
 export default Favoritos;
+
+export async function getStaticProps() {
+  const dataCat = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API}/categories/web`
+  );
+  const categories = await dataCat.json();
+
+  return {
+    props: {
+      categories,
+    },
+  };
+}

@@ -133,11 +133,7 @@ export async function getStaticProps() {
   const dataCat = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_API}/categories/web`
   );
-  console.log('dataCat', dataCat);
-
   const categories = await dataCat.json();
-
-  console.log('categories', categories);
 
   return {
     props: {
