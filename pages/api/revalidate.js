@@ -6,7 +6,7 @@
 // };
 
 export default async function handler(req, res) {
-  // await res.revalidate('/');
+  await res.revalidate('/');
   // await revalidate();
 
   const dataCat = await fetch(
