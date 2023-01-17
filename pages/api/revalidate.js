@@ -6,20 +6,22 @@
 // };
 
 export default async function handler(req, res) {
-  await res.revalidate('/');
+  if (req.headers['revalidate'] === process.env.REVALIDATE_TOKEN) {
+    await res.revalidate('/');
 
-  const dataCat = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API}/categories/web`
-  );
-  const categories = await dataCat.json();
+    const dataCat = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/categories/web`
+    );
+    const categories = await dataCat.json();
 
-  console.log('CATTTT', categories);
+    Promise.all(
+      categories.map(async (path) => {
+        await res.revalidate(`/categorias/${path.name}`);
+      })
+    );
 
-  Promise.all(
-    categories.map(async (path) => {
-      await res.revalidate(`/categorias/${path.name}`);
-    })
-  );
-
-  res.status(200).json({ revalidate: true });
+    res.status(200).json({ revalidate: true });
+  } else {
+    return res.status(401).end();
+  }
 }
