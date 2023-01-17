@@ -8,13 +8,13 @@ import Hero from '@/components/Hero';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const Home = ({ newProducts, bestSellers, featured, trend }) => {
+const Home = ({ newProducts, bestSellers, featured, trend, categories }) => {
   return (
     <>
       <PageLayout title="Labranzas | Home">
         <MenuMobile />
         <Hero />
-        <Menu />
+        <Menu categories={categories} />
 
         <h1 className="mt-16 text-2xl font-semibold text-center text-gray-900">
           Labranzas Tienda Online
@@ -126,12 +126,18 @@ export async function getStaticProps() {
   const products = await data.json();
 
   const newProducts = products.filter((prod) => prod.new_product === '1');
-
   const bestSellers = products.filter((prod) => prod.best_sellers === '1');
-
   const featured = products.filter((prod) => prod.featured === '1');
-
   const trend = products.filter((prod) => prod.trend === '1');
+
+  const dataCat = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API}/categories/web`
+  );
+  console.log('dataCat', dataCat);
+
+  const categories = await dataCat.json();
+
+  console.log('categories', categories);
 
   return {
     props: {
@@ -139,6 +145,7 @@ export async function getStaticProps() {
       bestSellers,
       featured,
       trend,
+      categories,
     },
   };
 }

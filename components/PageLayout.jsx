@@ -2,12 +2,7 @@ import Head from 'next/head';
 import { FC } from 'react';
 import Footer from './Footer/Footer';
 
-interface MyProps {
-  title?: string;
-  children: React.ReactNode;
-}
-
-const PageLayout: FC<MyProps> = ({ children, title = 'Labranzas' }) => {
+const PageLayout = ({ children, title = 'Labranzas' }) => {
   return (
     <>
       <Head>

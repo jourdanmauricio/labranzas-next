@@ -20,7 +20,6 @@ const Favoritos = () => {
   );
 
   const oderFav = [].concat(filterFav).sort((a, b) => {
-    console.log(order);
     switch (order) {
       case 'INITIAL':
         return filterFav;

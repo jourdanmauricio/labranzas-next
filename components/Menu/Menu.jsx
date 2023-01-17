@@ -15,7 +15,7 @@ const initialState = {
   message: '',
 };
 
-const Menu = () => {
+const Menu = ({ categories }) => {
   const $sessionModal = useStore(sessionModal);
 
   const router = useRouter();
@@ -57,15 +57,20 @@ const Menu = () => {
                 </Link>
 
                 <ul className="absolute top-14 -left-0 bg-gray-700 whitespace-nowrap text-gray-100 transform scale-0 group-hover:scale-100 transition duration-300 ease-in-out origin-top">
-                  <li className="pt-3 p-4 transition duration-300 ease-in-out hover:bg-gray-600">
-                    <Link href="#">Centros de mesa</Link>
-                  </li>
-                  <li className="pt-3 p-4 transition duration-300 ease-in-out hover:bg-gray-600">
-                    <Link href="">Souvenirs</Link>
-                  </li>
-                  <li className="pt-3 p-4 transition duration-300 ease-in-out hover:bg-gray-600">
-                    <Link href="">Hogar</Link>
-                  </li>
+                  {categories.map((cat) => (
+                    <li
+                      key={cat.id}
+                      className="pt-3 p-4 transition duration-300 ease-in-out hover:bg-gray-600"
+                    >
+                      <Link href="#">{cat.name}</Link>
+                    </li>
+                    // <li className="pt-3 p-4 transition duration-300 ease-in-out hover:bg-gray-600">
+                    //   <Link href="">Souvenirs</Link>
+                    // </li>
+                    // <li className="pt-3 p-4 transition duration-300 ease-in-out hover:bg-gray-600">
+                    //   <Link href="">Hogar</Link>
+                    // </li>
+                  ))}
                 </ul>
               </li>
             </div>
