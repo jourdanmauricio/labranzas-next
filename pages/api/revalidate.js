@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 
   Promise.all(
     categories.map(async (path) => {
-      await res.revalidate(`categoria/${path.name}`);
+      await res.revalidate(`/categorias/${path.name}`);
     })
   );
 
