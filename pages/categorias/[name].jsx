@@ -9,37 +9,39 @@ const Category = ({ products, categories, catName }) => {
     <PageLayout>
       <Menu categories={categories}></Menu>
 
-      <div className="flex">
-        <aside className="min-w-max">
-          <nav>
-            <ul>
-              {categories.map((cat) => (
-                <li
-                  key={cat.id}
-                  className={`hover:bg-gray-300 transition duration-300 ease-in-out ${
-                    cat.name === catName ? 'underline' : ''
-                  }`}
-                >
-                  <Link
-                    className="px-6 py-2 block"
-                    href={`/categorias/${cat.name}`}
+      {categories && (
+        <div className="flex">
+          <aside className="min-w-max">
+            <nav>
+              <ul>
+                {categories.map((cat) => (
+                  <li
+                    key={cat.id}
+                    className={`hover:bg-gray-300 transition duration-300 ease-in-out ${
+                      cat.name === catName ? 'underline' : ''
+                    }`}
                   >
-                    {cat.name} ({cat.cantidad})
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </aside>
+                    <Link
+                      className="px-6 py-2 block"
+                      href={`/categorias/${cat.name}`}
+                    >
+                      {cat.name} ({cat.cantidad})
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </aside>
 
-        <section className="py-2">
-          <div className="text-center p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-16 place-items-center">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </section>
-      </div>
+          <section className="py-2">
+            <div className="text-center p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-16 place-items-center">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </section>
+        </div>
+      )}
     </PageLayout>
   );
 };
@@ -63,6 +65,8 @@ export async function getStaticProps({ params }) {
     `${process.env.NEXT_PUBLIC_BACKEND_API}/categories/web`
   );
   const categories = await dataCat.json();
+
+  console.log('CATEGORIES!!!!', categories);
 
   return {
     props: {
@@ -90,8 +94,9 @@ export async function getCategories() {
 
 export async function getStaticPaths() {
   const paths = await getCategories();
+  console.log('PATHSSSSSSSSS', paths);
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 }
