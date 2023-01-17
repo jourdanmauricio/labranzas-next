@@ -60,9 +60,9 @@ const Menu = ({ categories }) => {
                 <div className="grid grid-cols-3 gap-4 p-6 min-w-max absolute top-14 left-0 -translate-x-1/3 bg-gray-700 whitespace-nowrap text-gray-100 transform scale-0 group-hover:scale-100 transition duration-300 ease-in-out origin-top">
                   {categories.map((cat) => (
                     <Link
+                      key={cat.id}
                       className="p-2 transition duration-300 ease-in-out hover:bg-gray-600"
                       href={`/categorias/${cat.name}`}
-                      key={cat.id}
                     >
                       {cat.name}
                     </Link>

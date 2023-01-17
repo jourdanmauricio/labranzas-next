@@ -1,17 +1,45 @@
-// import { getCategories, getCategory } from '../../libs/categories';
-
 import PageLayout from '@/components/PageLayout';
+import ProductCard from '@/components/ProductCard';
 import Menu from '@/components/Menu/Menu';
+import Link from 'next/link';
 
-const Category = ({ category }) => {
-  console.log('category', category);
+const Category = ({ products, categories, catName }) => {
+  console.log('category', catName);
   return (
     <PageLayout>
-      <h1>Category</h1>
+      <Menu categories={categories}></Menu>
 
-      {category.full_name}
+      <div className="flex">
+        <aside className="min-w-max">
+          <nav>
+            <ul>
+              {categories.map((cat) => (
+                <li
+                  key={cat.id}
+                  className={`hover:bg-gray-300 transition duration-300 ease-in-out ${
+                    cat.name === catName ? 'underline' : ''
+                  }`}
+                >
+                  <Link
+                    className="px-6 py-2 block"
+                    href={`/categorias/${cat.name}`}
+                  >
+                    {cat.name} ({cat.cantidad})
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </aside>
 
-      {/* <Menu categories={categories}></Menu> */}
+        <section className="py-2">
+          <div className="text-center p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-16 place-items-center">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+      </div>
     </PageLayout>
   );
 };
@@ -29,10 +57,18 @@ export async function getCategory(name) {
 }
 
 export async function getStaticProps({ params }) {
-  const category = await getCategory(params.name);
+  const products = await getCategory(params.name);
+
+  const dataCat = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API}/categories/web`
+  );
+  const categories = await dataCat.json();
+
   return {
     props: {
-      category,
+      products,
+      categories,
+      catName: params.name,
     },
   };
 }
@@ -42,7 +78,6 @@ export async function getCategories() {
     `${process.env.NEXT_PUBLIC_BACKEND_API}/categories/web`
   );
   const categories = await dataCat.json();
-  console.log('categories.name', categories);
 
   return categories.map((cat) => {
     return {
