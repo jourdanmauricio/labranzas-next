@@ -42,6 +42,7 @@ const Menu = ({ categories }) => {
               </Link>
             </li>
             {/* Submenu  */}
+
             <div className="group inline-block">
               <li
                 className={`hover:bg-gray-600 p-4 transition duration-300 ease-in-out group relative ${
@@ -56,7 +57,19 @@ const Menu = ({ categories }) => {
                   />
                 </Link>
 
-                <ul className="absolute top-14 -left-0 bg-gray-700 whitespace-nowrap text-gray-100 transform scale-0 group-hover:scale-100 transition duration-300 ease-in-out origin-top">
+                <div className="grid grid-cols-3 gap-4 p-6 min-w-max absolute top-14 left-0 -translate-x-1/3 bg-gray-700 whitespace-nowrap text-gray-100 transform scale-0 group-hover:scale-100 transition duration-300 ease-in-out origin-top">
+                  {categories.map((cat) => (
+                    <Link
+                      className="p-2 transition duration-300 ease-in-out hover:bg-gray-600"
+                      href={`/categorias/${cat.name}`}
+                      key={cat.id}
+                    >
+                      {cat.name}
+                    </Link>
+                  ))}
+                </div>
+
+                {/* <ul className="absolute top-14 -left-0 bg-gray-700 whitespace-nowrap text-gray-100 transform scale-0 group-hover:scale-100 transition duration-300 ease-in-out origin-top">
                   {categories.map((cat) => (
                     <li
                       key={cat.id}
@@ -64,14 +77,8 @@ const Menu = ({ categories }) => {
                     >
                       <Link href="#">{cat.name}</Link>
                     </li>
-                    // <li className="pt-3 p-4 transition duration-300 ease-in-out hover:bg-gray-600">
-                    //   <Link href="">Souvenirs</Link>
-                    // </li>
-                    // <li className="pt-3 p-4 transition duration-300 ease-in-out hover:bg-gray-600">
-                    //   <Link href="">Hogar</Link>
-                    // </li>
                   ))}
-                </ul>
+                </ul> */}
               </li>
             </div>
             {/* Submenu  */}
