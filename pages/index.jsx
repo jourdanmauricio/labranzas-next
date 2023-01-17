@@ -135,6 +135,8 @@ export async function getStaticProps() {
   );
   const categories = await dataCat.json();
 
+  console.log('categories!!!!!!!!!!!!!!!!!', categories);
+
   return {
     props: {
       newProducts,

@@ -5,8 +5,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 const Category = ({ products, categories, catName }) => {
-  console.log('category', catName);
-
   const router = useRouter();
 
   if (router.isFallback) {
@@ -24,7 +22,7 @@ const Category = ({ products, categories, catName }) => {
               <ul>
                 {categories.map((cat) => (
                   <li
-                    key={cat.id}
+                    key={cat.name}
                     className={`hover:bg-gray-300 transition duration-300 ease-in-out ${
                       cat.name === catName ? 'underline' : ''
                     }`}
@@ -57,7 +55,6 @@ const Category = ({ products, categories, catName }) => {
 export default Category;
 
 export async function getCategory(name) {
-  console.log('NAME', name);
   const dataCat = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_API}/categories/categoryweb/${name}`
   );
@@ -73,9 +70,6 @@ export async function getStaticProps({ params }) {
     `${process.env.NEXT_PUBLIC_BACKEND_API}/categories/web`
   );
   const categories = await dataCat.json();
-
-  console.log('CATEGORIES!!!!', categories);
-
   return {
     props: {
       products,
@@ -102,7 +96,6 @@ export async function getCategories() {
 
 export async function getStaticPaths() {
   const paths = await getCategories();
-  console.log('PATHSSSSSSSSS', paths);
   return {
     paths,
     fallback: true,
