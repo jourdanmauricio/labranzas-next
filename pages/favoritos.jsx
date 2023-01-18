@@ -38,7 +38,7 @@ const Favoritos = ({ categories }) => {
     <>
       <PageLayout title="Labranzas | Home">
         <header>
-          <MenuMobile />
+          <MenuMobile categories={categories} />
           <Menu categories={categories} />
         </header>
         <h1 className="pt-10 text-3xl text-gray-800 text-center">Favoritos</h1>

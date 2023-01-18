@@ -93,7 +93,7 @@ const RecoveryPassword = () => {
   return (
     <>
       <PageLayout title="Labranzas | Home">
-        <MenuMobile />
+        {/* <MenuMobile /> */}
         <Hero />
         {/* <Menu /> */}
 
