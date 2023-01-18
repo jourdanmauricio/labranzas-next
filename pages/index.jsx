@@ -12,7 +12,7 @@ const Home = ({ newProducts, bestSellers, featured, trend, categories }) => {
   return (
     <>
       <PageLayout title="Labranzas | Home">
-        <MenuMobile />
+        <MenuMobile categories={categories} />
         <Hero />
         <Menu categories={categories} />
 

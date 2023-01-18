@@ -1,6 +1,5 @@
 import { useStore } from '@nanostores/react';
 import { sessionModal, user } from '@/stores/users';
-import { useRouter } from 'next/router';
 import { Icon } from '@iconify/react';
 import FavoritesButton from './FavoritesButton';
 import FavoritesFlyout from '../Favorites/FavoritesFlyout';
@@ -10,7 +9,7 @@ import Modal from '../Modal/Modal';
 import Tabs from '../auth/Tabs';
 import { useEffect, useRef, useState } from 'react';
 
-const MenuMobile = () => {
+const MenuMobile = ({ categories }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const btnMenuRef = useRef();
 
@@ -71,7 +70,20 @@ const MenuMobile = () => {
                 Inicio
               </Link>
             </li>
-            <li className="hover:bg-gray-600 transition duration-300 ease-in-out">
+            {categories.map((cat) => (
+              <li
+                key={cat.name}
+                className="hover:bg-gray-600 transition duration-300 ease-in-out"
+              >
+                <Link
+                  className="px-6 py-3 block"
+                  href={`/categorias/${cat.name}`}
+                >
+                  {cat.name}
+                </Link>
+              </li>
+            ))}
+            {/* <li className="hover:bg-gray-600 transition duration-300 ease-in-out">
               <Link className="px-6 py-3 block" href="#">
                 Centros de mesa
               </Link>
@@ -85,7 +97,7 @@ const MenuMobile = () => {
               <Link className="px-6 py-3 block" href="#">
                 Hogar
               </Link>
-            </li>
+            </li> */}
             <li className=" hover:bg-gray-600 transition duration-300 ease-in-out">
               <Link className="px-6 py-3 block" href="#">
                 Contacto

@@ -1,6 +1,7 @@
 import PageLayout from '@/components/PageLayout';
 import ProductCard from '@/components/ProductCard';
 import Menu from '@/components/Menu/Menu';
+import MenuMobile from '@/components/Menu/MenuMobile';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -13,13 +14,17 @@ const Category = ({ products, categories, catName }) => {
 
   return (
     <PageLayout>
+      <MenuMobile categories={categories}></MenuMobile>
       <Menu categories={categories}></Menu>
 
       {categories && (
         <div className="flex">
-          <aside className="min-w-max">
+          <aside className="hidden sm:block min-w-max border-r">
             <nav>
               <ul>
+                <li className="my-6 border-t border-b  text-center">
+                  <span className="text-xl ">Categorías</span>
+                </li>
                 {categories.map((cat) => (
                   <li
                     key={cat.name}
