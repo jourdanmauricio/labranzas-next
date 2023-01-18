@@ -4,9 +4,28 @@ import Menu from '@/components/Menu/Menu';
 import MenuMobile from '@/components/Menu/MenuMobile';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import SearchFilterOrder from '../../components/SearchFilterOrder';
+import { useState } from 'react';
 
 const Category = ({ products, categories, catName }) => {
   const router = useRouter();
+  const [order, setOrder] = useState('Ordenar por');
+  const [searchText, setSearchText] = useState('');
+  const filterProducts = products.filter(
+    (item) =>
+      item.title.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.seller_custom_field.toLowerCase().includes(searchText.toLowerCase())
+  );
+  const orderProducts = [].concat(filterProducts).sort((a, b) => {
+    switch (order) {
+      case 'INITIAL':
+        return filterProducts;
+      case 'MIN-VALUE':
+        return parseFloat(a.price) - parseFloat(b.price);
+      case 'MAX-VALUE':
+        return parseFloat(b.price) - parseFloat(a.price);
+    }
+  });
 
   if (router.isFallback) {
     return <div>Loading...</div>;
@@ -18,11 +37,12 @@ const Category = ({ products, categories, catName }) => {
       <Menu categories={categories}></Menu>
 
       {categories && (
-        <div className="flex">
-          <aside className="hidden sm:block min-w-max border-r">
+        <div className="flex px-2">
+          <aside className="hidden text-sm tracking-wider sm:block max-w-[240px] border-r">
+            {/* min-w-max */}
             <nav>
               <ul>
-                <li className="my-6 border-t border-b  text-center">
+                <li className="h-12 my-4 border-t border-b flex justify-center items-center  border-gray-300">
                   <span className="text-xl ">Categorías</span>
                 </li>
                 {categories.map((cat) => (
@@ -33,7 +53,7 @@ const Category = ({ products, categories, catName }) => {
                     }`}
                   >
                     <Link
-                      className="px-6 py-2 block"
+                      className="p-2 block"
                       href={`/categorias/${cat.name}`}
                     >
                       {cat.name} ({cat.cantidad})
@@ -44,9 +64,19 @@ const Category = ({ products, categories, catName }) => {
             </nav>
           </aside>
 
-          <section className="py-2">
-            <div className="text-center p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-16 place-items-center">
-              {products.map((product) => (
+          <section className="py-4 w-full">
+            <SearchFilterOrder
+              searchText={searchText}
+              setSearchText={setSearchText}
+              order={order}
+              setOrder={setOrder}
+              total={products.length}
+              partial={filterProducts.length}
+              feature={catName}
+            />
+
+            <div className="text-center p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 place-items-center">
+              {orderProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>

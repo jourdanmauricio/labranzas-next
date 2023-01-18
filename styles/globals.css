@@ -135,14 +135,14 @@ a {
     @apply p-4 bg-white text-gray-700 w-64 min-h-[20rem] shadow-lg rounded-md overflow-hidden;
   } */
   .card {
-    @apply relative p-4 bg-gray-100 text-gray-900 w-80 min-h-[20rem]  overflow-hidden;
+    @apply relative p-4 bg-gray-100 text-gray-900 min-h-[20rem] overflow-hidden;
   }
 
   .badge {
     @apply mt-2 px-3 py-1 rounded-full text-xs bg-gray-200;
   }
   .product-title {
-    @apply text-base overflow-ellipsis;
+    @apply text-base text-left h-12;
   }
   .discount-percent {
     @apply bg-green-400 px-1.5 py-0.5 rounded-md text-xs text-white;

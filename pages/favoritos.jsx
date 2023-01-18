@@ -5,7 +5,7 @@ import MenuMobile from '@/components/Menu/MenuMobile';
 import { favoritesItems } from '@/stores/favorites';
 import { useEffect, useState } from 'react';
 import FavoriteItem from '@/components/Favorites/FavoriteItem';
-import { Icon } from '@iconify/react';
+import SearchFilterOrder from '../components/SearchFilterOrder';
 
 const Favoritos = ({ categories }) => {
   const $favoritesItems = useStore(favoritesItems);
@@ -44,35 +44,15 @@ const Favoritos = ({ categories }) => {
         <h1 className="pt-10 text-3xl text-gray-800 text-center">Favoritos</h1>
 
         <section className="p-4 sm:p-10">
-          <article className="h-10 p-1 sm:px-3 text-sm text-gray-700 flex items-center justify-between border border-gray-300">
-            <p className="hidden sm:inline-block">
-              Favoritos {filterFav.length} de {favItems.length}
-            </p>
-            <div className="flex justify-end items-center relative">
-              <input
-                className="border border-gray-300 rounded p-1 w-full"
-                type="text"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-              <Icon
-                icon="mdi:search"
-                className="absolute text-lg right-0 w-8 rotate-90"
-              />
-            </div>
-            <div>
-              <select
-                className="border border-gray-300 bg-white rounded p-1 w-full"
-                name="select"
-                value={order}
-                onChange={(e) => setOrder(e.target.value)}
-              >
-                <option value="INITIAL">Ordenar por</option>
-                <option value="MIN-VALUE">Menor precio</option>
-                <option value="MAX-VALUE">Mayor precio</option>
-              </select>
-            </div>
-          </article>
+          <SearchFilterOrder
+            searchText={searchText}
+            setSearchText={setSearchText}
+            order={order}
+            setOrder={setOrder}
+            total={favItems.length}
+            partial={filterFav.length}
+            feature="Favoritos"
+          />
           <article className="">
             {oderFav.length > 0 && (
               <ul>

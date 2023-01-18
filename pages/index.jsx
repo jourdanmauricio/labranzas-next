@@ -28,7 +28,7 @@ const Home = ({ newProducts, bestSellers, featured, trend, categories }) => {
           <section className="py-16">
             <Divider text="Últimas publicaciones" />
 
-            <div className="text-center p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-16 place-items-center">
+            <div className="text-center p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-16 place-items-center">
               {newProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -62,7 +62,7 @@ const Home = ({ newProducts, bestSellers, featured, trend, categories }) => {
           <section className="py-16">
             <Divider text="Más vendidos" />
 
-            <div className="text-center p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-16 place-items-center">
+            <div className="text-center p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-16 place-items-center">
               {bestSellers.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

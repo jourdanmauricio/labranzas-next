@@ -10,6 +10,7 @@ import Image from 'next/image';
 
 const ProductCard = ({ product }) => {
   const favorites = useStore(favoritesItems);
+
   const handleClick = () => {
     isFavorite(product.id)
       ? removeFavoriteItem(product.id)
@@ -53,7 +54,7 @@ const ProductCard = ({ product }) => {
           <span className="badge">Oficial store</span>
         </div>
 
-        <h2 className="product-title" title={product.title}>
+        <h2 className="line-clamp-2 product-title" title={product.title}>
           {product.title}
         </h2>
 
