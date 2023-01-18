@@ -7,15 +7,20 @@ import { useRouter } from 'next/router';
 import SearchFilterOrder from '../../components/SearchFilterOrder';
 import { useState } from 'react';
 
-const Category = ({ products, categories, catName }) => {
+const Category = ({ products = [], categories, catName }) => {
   const router = useRouter();
   const [order, setOrder] = useState('Ordenar por');
   const [searchText, setSearchText] = useState('');
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   const filterProducts = products.filter(
     (item) =>
       item.title.toLowerCase().includes(searchText.toLowerCase()) ||
       item.seller_custom_field.toLowerCase().includes(searchText.toLowerCase())
   );
+
   const orderProducts = [].concat(filterProducts).sort((a, b) => {
     switch (order) {
       case 'INITIAL':
@@ -26,10 +31,6 @@ const Category = ({ products, categories, catName }) => {
         return parseFloat(b.price) - parseFloat(a.price);
     }
   });
-
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <PageLayout>
